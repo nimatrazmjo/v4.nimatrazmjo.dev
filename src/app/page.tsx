@@ -3,6 +3,7 @@ import { Hero } from "@/components/hero";
 import { Stats } from "@/components/stats";
 import { Footer } from "@/components/footer";
 import { Contact } from "@/components/contact";
+import { Newsletter } from "@/components/newsletter";
 import { ArticlesContent } from "@/components/articles-content";
 import fetchAllBlogs from "@/actions/articles/articles";
 import { Suspense } from "react";
@@ -19,6 +20,7 @@ export default async function Home() {
         <Suspense fallback={<div className="py-20 text-center text-muted-foreground italic">Loading engineering notes...</div>}>
           <ArticlesContent initialArticles={articles} totalPages={totalPages} />
         </Suspense>
+        <Newsletter />
         <Contact />
       </main>
       <Footer />
