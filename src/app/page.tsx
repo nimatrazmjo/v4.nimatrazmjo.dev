@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/navbar";
 import { Hero } from "@/components/hero";
+import { Stats } from "@/components/stats";
 import { Footer } from "@/components/footer";
 import { Contact } from "@/components/contact";
 import { ArticlesContent } from "@/components/articles-content";
@@ -14,6 +15,7 @@ export default async function Home() {
       <Navbar />
       <main>
         <Hero />
+        <Stats />
         <Suspense fallback={<div className="py-20 text-center text-muted-foreground italic">Loading engineering notes...</div>}>
           <ArticlesContent initialArticles={articles} totalPages={totalPages} />
         </Suspense>
