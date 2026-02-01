@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Moon, Sun, Menu, X } from "lucide-react"
 import { useTheme } from "next-themes"
+import { CalendarButton } from "./calendar-button"
 
 const navItems = [
   { name: "Home", href: "/#" },
@@ -62,7 +63,7 @@ export function Navbar() {
               <span className="sr-only">Toggle theme</span>
             </Button>
             <div className="hidden md:block">
-              <Button className="rounded-full px-6">Set Meeting</Button>
+              <CalendarButton />
             </div>
             <button
               className="md:hidden"
@@ -95,7 +96,9 @@ export function Navbar() {
                 {item.name}
               </Link>
             ))}
-            <Button className="w-full">Set Meeting</Button>
+            <div className="w-full flex justify-center py-2">
+              <CalendarButton />
+            </div>
           </nav>
         </motion.div>
       )}
