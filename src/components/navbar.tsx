@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
@@ -18,16 +19,31 @@ const navItems = [
 
 export function Navbar() {
   const pathname = usePathname()
-  const { theme, setTheme } = useTheme()
+  const { theme, setTheme, resolvedTheme } = useTheme()
   const [isOpen, setIsOpen] = React.useState(false)
+  const [mounted, setMounted] = React.useState(false)
+
+  React.useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const logoSrc = mounted && resolvedTheme === "dark"
+    ? "/images/white-logo.svg"
+    : "/images/black-logo.svg"
 
   return (
     <header className="fixed top-0 z-50 w-full">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-8">
-            <Link href="/" className="text-xl font-bold tracking-tighter">
-              NR<span className="text-primary">.</span>
+            <Link href="/" className="flex items-center">
+              <Image
+                src={logoSrc}
+                alt="Logo"
+                width={36}
+                height={36}
+                className="transition-opacity duration-300"
+              />
             </Link>
             <nav className="hidden md:flex items-center gap-6">
               {navItems.map((item) => (

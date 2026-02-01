@@ -2,17 +2,37 @@
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Github, Linkedin, Twitter, Mail, ExternalLink } from "lucide-react"
+import { Github, Linkedin, Twitter, ExternalLink } from "lucide-react"
+import Image from "next/image"
+import { useTheme } from "next-themes"
+import { useEffect, useState } from "react"
 
 export function Footer() {
   const SUBSTACK_URL = "https://nimatrazmjo.substack.com";
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const logoSrc = mounted && resolvedTheme === "dark"
+    ? "/images/white-logo.svg"
+    : "/images/black-logo.svg";
+
   return (
     <footer className="border-t border-white/5 bg-secondary/5 pt-20 pb-10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           <div className="lg:col-span-2">
-            <div className="text-2xl font-bold tracking-tighter mb-6">
-              NR<span className="text-primary">.</span>
+            <div className="mb-6">
+              <Image
+                src={logoSrc}
+                alt="Logo"
+                width={40}
+                height={40}
+                className="transition-opacity duration-300"
+              />
             </div>
             <p className="text-muted-foreground max-w-sm mb-8 leading-relaxed">
               Designing and developing high-performance web applications and scalable backend systems
@@ -20,14 +40,15 @@ export function Footer() {
             </p>
             <div className="flex items-center gap-4">
               {[
-                { icon: <Github className="w-5 h-5" />, href: "#" },
-                { icon: <Linkedin className="w-5 h-5" />, href: "#" },
-                { icon: <Twitter className="w-5 h-5" />, href: "#" },
-                { icon: <Mail className="w-5 h-5" />, href: "mailto:nimatullah.razmjo@gmail.com" },
+                { icon: <Github className="w-5 h-5" />, href: "https://github.com/nimatrazmjo" },
+                { icon: <Linkedin className="w-5 h-5" />, href: "https://linkedin.com/in/nimatrazmjo" },
+                { icon: <Twitter className="w-5 h-5" />, href: "https://twitter.com/nimatrazmjo" },
               ].map((social, i) => (
                 <a
                   key={i}
                   href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="p-2 rounded-full border border-white/5 bg-white/5 hover:bg-primary/10 hover:text-primary transition-all"
                 >
                   {social.icon}
