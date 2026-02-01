@@ -7,10 +7,10 @@ import { ArrowRight, Code2, Cpu, Globe, Rocket } from "lucide-react"
 import Link from "next/link"
 
 const techs = [
-  { name: "TypeScript", icon: <Code2 className="w-3 h-3" /> },
-  { name: "Next.js", icon: <Rocket className="w-3 h-3" /> },
-  { name: "Node.js", icon: <Cpu className="w-3 h-3" /> },
-  { name: "AWS", icon: <Globe className="w-3 h-3" /> },
+  { name: "Scalable Systems", icon: <Cpu className="w-3 h-3" /> },
+  { name: "Cloud-Native Architecture", icon: <Globe className="w-3 h-3" /> },
+  { name: "High-Traffic APIs", icon: <Rocket className="w-3 h-3" /> },
+  { name: "Production-Grade DevOps", icon: <Code2 className="w-3 h-3" /> },
 ]
 
 export function Hero() {
