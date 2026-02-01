@@ -1,63 +1,60 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { Button } from "@/components/ui/button"
+import { CalendarDays } from "lucide-react"
+import { motion, useAnimationControls } from "framer-motion"
+import { useEffect } from "react"
+import { cn } from "@/lib/utils"
 
-declare global {
-  interface Window {
-    calendar: {
-      schedulingButton: {
-        load: (config: {
-          url: string;
-          color: string;
-          label: string;
-          target: HTMLElement;
-        }) => void;
-      };
-    };
-  }
-}
-
-export function CalendarButton() {
-  const calendarRef = useRef<HTMLDivElement>(null)
+export function CalendarButton({ className }: { className?: string }) {
+  const APPOINTMENT_URL = "https://calendar.google.com/calendar/appointments/schedules/AcZssZ3EMlsl4mH3NKHCy9AFYbpU814R5lEWOQaDNFNcK8wcxzExE7YbyNl7GytRnvFgIRDJQ_gmKBb7?gv=true";
+  const controls = useAnimationControls();
 
   useEffect(() => {
-    // Add the CSS
-    const link = document.createElement("link")
-    link.href = "https://calendar.google.com/calendar/scheduling-button-script.css"
-    link.rel = "stylesheet"
-    document.head.appendChild(link)
-
-    // Load the script
-    const script = document.createElement("script")
-    script.src = "https://calendar.google.com/calendar/scheduling-button-script.js"
-    script.async = true
-
-    script.onload = () => {
-      // Once the script is loaded, initialize the button
-      if (window.calendar && window.calendar.schedulingButton && calendarRef.current) {
-        window.calendar.schedulingButton.load({
-          url: "https://calendar.google.com/calendar/appointments/schedules/AcZssZ3EMlsl4mH3NKHCy9AFYbpU814R5lEWOQaDNFNcK8wcxzExE7YbyNl7GytRnvFgIRDJQ_gmKBb7?gv=true",
-          color: "#039BE5",
-          label: "Set Meeting",
-          target: calendarRef.current,
-        })
-      }
-    }
-
-    document.body.appendChild(script)
-
-    // Cleanup function
-    return () => {
-      if (document.head.contains(link)) {
-        document.head.removeChild(link)
-      }
-      if (document.body.contains(script)) {
-        document.body.removeChild(script)
-      }
-    }
-  }, [])
+    // Continuous subtle pulse animation
+    controls.start({
+      scale: [1, 1.02, 1],
+      transition: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+    });
+  }, [controls]);
 
   return (
-    <div ref={calendarRef} className="calendar-button-wrapper" />
+    <motion.div
+      animate={controls}
+      whileHover={{ scale: 1.05, y: -2 }}
+      whileTap={{ scale: 0.95 }}
+      className={cn("relative group", className)}
+    >
+      {/* Background Glow Effect */}
+      <div className="absolute -inset-1 bg-linear-to-r from-primary/30 to-indigo-500/30 rounded-full blur-md opacity-0 group-hover:opacity-100 transition duration-500" />
+
+      <Button
+        asChild
+        className="relative w-full rounded-full bg-primary px-6 h-12 md:h-10 font-bold text-primary-foreground shadow-lg transition-all hover:shadow-primary/40 group-hover:bg-primary/90"
+      >
+        <a
+          href={APPOINTMENT_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center gap-2 overflow-hidden"
+        >
+          <CalendarDays className="h-4 w-4" />
+          <span className="tracking-tight whitespace-nowrap text-base md:text-sm">Book a Meeting</span>
+
+          {/* Professional Shine Effect */}
+          <motion.div
+            initial={{ x: "-150%" }}
+            animate={{ x: "150%" }}
+            transition={{
+              repeat: Infinity,
+              duration: 2.5,
+              ease: "easeInOut",
+              repeatDelay: 3
+            }}
+            className="absolute inset-0 z-10 w-full bg-linear-to-r from-transparent via-white/20 to-transparent skew-x-[-25deg]"
+          />
+        </a>
+      </Button>
+    </motion.div>
   );
 }
