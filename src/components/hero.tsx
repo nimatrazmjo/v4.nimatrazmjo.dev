@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ArrowRight, Code2, Cpu, Globe, Rocket } from "lucide-react"
+import Link from "next/link"
 
 const techs = [
   { name: "TypeScript", icon: <Code2 className="w-3 h-3" /> },
@@ -38,13 +39,17 @@ export function Hero() {
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4 mb-12">
-            <Button size="lg" className="rounded-full h-12 px-8 group font-medium">
-              View Projects
-              <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </Button>
-            <Button size="lg" variant="outline" className="rounded-full h-12 px-8 font-medium">
-              Read Blog
-            </Button>
+            <Link href="#articles">
+              <Button size="lg" className="rounded-full h-12 px-8 group font-medium">
+                Read Articles
+                <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Button>
+            </Link>
+            <Link href="#contact">
+              <Button size="lg" variant="outline" className="rounded-full h-12 px-8 font-medium">
+                Get in Touch
+              </Button>
+            </Link>
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-3">
