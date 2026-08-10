@@ -2,73 +2,61 @@
 
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { ArrowRight, Code2, Cpu, Globe, Rocket } from "lucide-react"
 import Link from "next/link"
 
-const techs = [
-  { name: "Scalable Systems", icon: <Cpu className="w-3 h-3" /> },
-  { name: "Cloud-Native Architecture", icon: <Globe className="w-3 h-3" /> },
-  { name: "High-Traffic APIs", icon: <Rocket className="w-3 h-3" /> },
-  { name: "Production-Grade DevOps", icon: <Code2 className="w-3 h-3" /> },
+const capabilities = [
+  "Scalable Systems",
+  "Cloud-Native Architecture",
+  "High-Traffic APIs",
+  "Production-Grade DevOps",
 ]
 
 export function Hero() {
   return (
-    <section className="relative pt-32 pb-20 overflow-hidden">
-      {/* Background Glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[500px] bg-primary/20 blur-[120px] -z-10 rounded-full" />
+    <section id="home" className="pt-[120px] pb-[88px] text-center">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="inline-flex items-center gap-2 mb-8 rounded-full border border-border px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+          <span
+            className="h-1.5 w-1.5 rounded-full animate-pulse-dot"
+            style={{ background: "var(--brand-accent)" }}
+          />
+          Available for new projects
+        </div>
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <Badge variant="outline" className="mb-6 rounded-full py-1 px-4 border-primary/20 bg-primary/5 text-primary">
-            Available for new projects
-          </Badge>
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6">
-            <span className="text-gradient">Designing Scalable</span>
-            <br />
-            <span className="text-vibrant">Digital Experiences</span>
-          </h1>
-          <p className="max-w-2xl mx-auto text-lg text-muted-foreground mb-10">
-            Nimat Razmjo — Lead Software Engineer with 12+ years experience building high-traffic APIs,
-            optimized backend systems, and modern full-stack applications.
-          </p>
+        <h1 className="text-[clamp(42px,6vw,72px)] font-extrabold tracking-[-0.02em] leading-[1.05] mb-6 text-foreground">
+          Designing Scalable
+          <br />
+          <span style={{ color: "var(--brand-accent-ink)" }}>Digital Experiences</span>
+        </h1>
 
-          <div className="flex flex-wrap items-center justify-center gap-4 mb-12">
-            <Link href="#articles">
-              <Button size="lg" className="rounded-full h-12 px-8 group font-medium">
-                Read Articles
-                <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </Button>
-            </Link>
-            <Link href="#contact">
-              <Button size="lg" variant="outline" className="rounded-full h-12 px-8 font-medium">
-                Get in Touch
-              </Button>
-            </Link>
-          </div>
+        <p className="max-w-[600px] mx-auto text-lg leading-relaxed text-muted-foreground mb-10">
+          Nimat Razmjo — Lead Software Engineer with 12+ years experience building high-traffic APIs,
+          optimized backend systems, and modern full-stack applications.
+        </p>
 
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            {techs.map((tech, i) => (
-              <motion.div
-                key={tech.name}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.1 * i }}
-              >
-                <Badge variant="secondary" className="gap-1.5 py-1.5 px-3 rounded-full bg-secondary/50 backdrop-blur-sm border-white/5">
-                  {tech.icon}
-                  {tech.name}
-                </Badge>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      </div>
+        <div className="flex flex-wrap items-center justify-center gap-3.5 mb-14">
+          <Link href="#articles">
+            <Button className="rounded-full h-auto py-[14px] px-[26px] font-mono text-[13px] font-semibold">
+              Read Articles →
+            </Button>
+          </Link>
+          <Link href="#contact">
+            <Button variant="outline" className="rounded-full h-auto py-[14px] px-[26px] font-mono text-[13px] font-semibold">
+              Get in Touch
+            </Button>
+          </Link>
+        </div>
+
+        <div className="flex flex-wrap items-center justify-center gap-7 font-mono text-xs text-muted-foreground">
+          {capabilities.map((label) => (
+            <span key={label}>◆ {label}</span>
+          ))}
+        </div>
+      </motion.div>
     </section>
   )
 }

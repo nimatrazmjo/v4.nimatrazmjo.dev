@@ -15,13 +15,13 @@ export default async function Home() {
   const { articles, totalPages } = await fetchAllBlogs({ page: 1 });
 
   return (
-    <div className="relative min-h-screen">
+    <div className="mx-auto max-w-[1180px] px-5 sm:px-8 lg:px-14">
       <Navbar />
       <main>
         <Hero />
         <Stats />
         <Projects />
-        <Suspense fallback={<div className="py-20 text-center text-muted-foreground italic">Loading engineering notes...</div>}>
+        <Suspense fallback={<div className="py-20 text-center text-muted-foreground font-mono text-sm italic">Loading engineering notes...</div>}>
           <ArticlesContent initialArticles={articles} totalPages={totalPages} />
         </Suspense>
         <Newsletter />

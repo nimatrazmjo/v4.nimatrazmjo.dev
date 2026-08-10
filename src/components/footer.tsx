@@ -2,104 +2,88 @@
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Github, Linkedin, Twitter, ExternalLink } from "lucide-react"
-import Image from "next/image"
-import { useTheme } from "next-themes"
-import { useEffect, useState } from "react"
+import { Github, Linkedin, Twitter, ArrowUpRight } from "lucide-react"
 
 export function Footer() {
   const SUBSTACK_URL = "https://nimatrazmjo.substack.com";
-  const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const logoSrc = !mounted || resolvedTheme === "dark"
-    ? "/images/white-logo.svg"
-    : "/images/black-logo.svg";
+  const socials = [
+    { icon: Github, href: "https://github.com/nimatrazmjo" },
+    { icon: Linkedin, href: "https://linkedin.com/in/nimatrazmjo" },
+    { icon: Twitter, href: "https://twitter.com/nimatrazmjo" },
+  ]
 
   return (
-    <footer className="border-t border-white/5 bg-secondary/5 pt-20 pb-10">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-          <div className="lg:col-span-2">
-            <div className="mb-6">
-              <Image
-                src={logoSrc}
-                alt="Logo"
-                width={40}
-                height={40}
-                className="transition-opacity duration-300"
-              />
-            </div>
-            <p className="text-muted-foreground max-w-sm mb-8 leading-relaxed">
-              Designing and developing high-performance web applications and scalable backend systems
-              with a focus on user experience and technical excellence.
-            </p>
-            <div className="flex items-center gap-4">
-              {[
-                { icon: <Github className="w-5 h-5" />, href: "https://github.com/nimatrazmjo" },
-                { icon: <Linkedin className="w-5 h-5" />, href: "https://linkedin.com/in/nimatrazmjo" },
-                { icon: <Twitter className="w-5 h-5" />, href: "https://twitter.com/nimatrazmjo" },
-              ].map((social, i) => (
-                <a
-                  key={i}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 rounded-full border border-white/5 bg-white/5 hover:bg-primary/10 hover:text-primary transition-all"
-                >
-                  {social.icon}
-                </a>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h4 className="font-bold mb-6">Navigation</h4>
-            <ul className="space-y-4 text-sm text-muted-foreground">
-              <li><a href="#" className="hover:text-primary transition-colors">Home</a></li>
-              <li><a href="#articles" className="hover:text-primary transition-colors">Engineering Notes</a></li>
-              <li><a href="#contact" className="hover:text-primary transition-colors">Get in Touch</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-bold mb-6">Newsletter</h4>
-            <p className="text-sm text-muted-foreground mb-4">
-              Get the latest insights on cloud architecture and web dev on my Substack.
-            </p>
-            <form
-              className="flex flex-col gap-2"
-              onSubmit={(e) => {
-                e.preventDefault();
-                const email = (e.currentTarget.elements.namedItem('email') as HTMLInputElement).value;
-                window.open(`${SUBSTACK_URL}/subscribe?email=${encodeURIComponent(email)}`, "_blank");
-              }}
+    <footer className="border-t border-border pt-14 pb-8">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+        <div className="md:col-span-2">
+          <div className="flex items-center gap-2.5 font-mono font-semibold text-sm text-foreground mb-3.5">
+            <span
+              className="flex h-[26px] w-[26px] items-center justify-center rounded-[7px] text-[12px] font-bold"
+              style={{ background: "var(--brand-accent)", color: "#04222b" }}
             >
-              <div className="flex gap-2">
-                <Input
-                  name="email"
-                  type="email"
-                  required
-                  placeholder="Email address"
-                  className="bg-white/5 border-white/10 rounded-full px-4 text-sm"
-                />
-                <Button type="submit" className="rounded-full px-3 group">
-                  <ExternalLink className="w-4 h-4 opacity-50 group-hover:opacity-100 transition-opacity" />
-                </Button>
-              </div>
-              <p className="text-[10px] text-muted-foreground mt-1">Opens in Substack</p>
-            </form>
+              NR
+            </span>
+            nimat.razmjo
+          </div>
+          <p className="text-[13px] text-muted-foreground max-w-[320px] mb-[18px] leading-relaxed">
+            Designing and developing high-performance web applications and scalable backend systems
+            with a focus on user experience and technical excellence.
+          </p>
+          <div className="flex items-center gap-3">
+            {socials.map(({ icon: Icon, href }) => (
+              <a
+                key={href}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-8 w-8 items-center justify-center rounded-[8px] border border-input text-foreground/70 transition-colors hover:border-foreground/40"
+              >
+                <Icon className="w-[15px] h-[15px]" />
+              </a>
+            ))}
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5 text-xs text-muted-foreground">
-          <p>© {new Date().getFullYear()} Nimat Razmjo. All rights reserved.</p>
-          <p>Built with Next.js, Tailwind & Framer Motion.</p>
+        <div>
+          <h4 className="font-bold text-[13px] text-foreground mb-3.5">Navigation</h4>
+          <ul className="flex flex-col gap-2.5 text-[13px] text-muted-foreground">
+            <li><a href="#home" className="!text-inherit hover:!text-foreground transition-colors">Home</a></li>
+            <li><a href="#articles" className="!text-inherit hover:!text-foreground transition-colors">Engineering Notes</a></li>
+            <li><a href="#contact" className="!text-inherit hover:!text-foreground transition-colors">Get in Touch</a></li>
+          </ul>
         </div>
+
+        <div>
+          <h4 className="font-bold text-[13px] text-foreground mb-3.5">Newsletter</h4>
+          <p className="text-[13px] text-muted-foreground mb-3 leading-relaxed">
+            Get the latest insights on cloud architecture and web dev on my Substack.
+          </p>
+          <form
+            className="flex gap-2"
+            onSubmit={(e) => {
+              e.preventDefault();
+              const email = (e.currentTarget.elements.namedItem('email') as HTMLInputElement).value;
+              window.open(`${SUBSTACK_URL}/subscribe?email=${encodeURIComponent(email)}`, "_blank");
+            }}
+          >
+            <Input
+              name="email"
+              type="email"
+              required
+              placeholder="Email address"
+              className="h-auto py-2.5 rounded-[8px] text-[13px]"
+            />
+            <Button type="submit" size="icon" className="h-9 w-9 shrink-0 rounded-[8px]">
+              <ArrowUpRight className="w-4 h-4" />
+            </Button>
+          </form>
+        </div>
+      </div>
+
+      <div className="flex flex-col md:flex-row items-center justify-between gap-2 pt-6 border-t border-border font-mono text-xs text-muted-foreground">
+        <span>© {new Date().getFullYear()} Nimat Razmjo. All rights reserved.</span>
+        <span>Built with Next.js, Tailwind &amp; Framer Motion.</span>
       </div>
     </footer>
   )

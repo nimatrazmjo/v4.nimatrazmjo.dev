@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Card } from "@/components/ui/card"
-import { Mail, MessageSquare, Send, User, CheckCircle2, AlertCircle } from "lucide-react"
+import { Mail, MessageSquare, CheckCircle2, AlertCircle } from "lucide-react"
 import { sendEmail } from "@/actions/contact"
 
 export function Contact() {
@@ -54,128 +54,124 @@ export function Contact() {
   }
 
   return (
-    <section className="py-20 relative overflow-hidden" id="contact">
-      {/* Background Glow */}
-      <div className="absolute bottom-0 right-0 w-full max-w-xl h-96 bg-primary/10 blur-[100px] -z-10 rounded-full" />
+    <section id="contact" className="pb-[130px] grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+      <div>
+        <h2 className="text-[clamp(30px,3.6vw,40px)] font-extrabold tracking-[-0.01em] leading-[1.15] text-foreground mb-[18px]">
+          Let&apos;s build something{" "}
+          <span style={{ color: "var(--brand-accent-ink)" }}>extraordinary</span> together.
+        </h2>
+        <p className="text-muted-foreground text-[15px] mb-9 leading-relaxed max-w-[420px]">
+          Whether you have a specific project in mind or just want to chat about
+          the latest in cloud architecture and web dev, my inbox is always open.
+        </p>
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-6">
-              Let's build something <span className="text-vibrant">extraordinary</span> together.
-            </h2>
-            <p className="text-muted-foreground text-lg mb-10 leading-relaxed">
-              Whether you have a specific project in mind or just want to chat about
-              the latest in cloud architecture and web dev, my inbox is always open.
-            </p>
-
-            <div className="space-y-6">
-              <div className="flex items-center gap-4 group">
-                <div className="p-3 rounded-xl bg-white/5 border border-white/10 group-hover:bg-primary/10 group-hover:border-primary/20 transition-all">
-                  <Mail className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Email me at</p>
-                  <p className="text-lg font-medium">nimatullah.razmjo@gmail.com</p>
-                </div>
+        <div className="flex flex-col gap-5">
+          <div className="flex items-center gap-3.5">
+            <div
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[9px] brand-icon-tile"
+              style={{ color: "var(--brand-accent-ink)" }}
+            >
+              <Mail className="w-4 h-4" />
+            </div>
+            <div>
+              <div className="font-mono text-[10px] uppercase tracking-wider text-[var(--text-faint)]">
+                Email Me At
               </div>
-              <div className="flex items-center gap-4 group">
-                <div className="p-3 rounded-xl bg-white/5 border border-white/10 group-hover:bg-primary/10 group-hover:border-primary/20 transition-all">
-                  <MessageSquare className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Discord / Telegram</p>
-                  <p className="text-lg font-medium">@nimatrazmjo</p>
-                </div>
-              </div>
+              <div className="text-sm font-semibold text-foreground">nimatullah.razmjo@gmail.com</div>
             </div>
           </div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-          >
-            <Card className="p-8 glass-card border-white/5">
-              <form className="space-y-6" onSubmit={handleSubmit}>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium ml-1">Full Name</label>
-                  <div className="relative">
-                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                    <Input
-                      name="name"
-                      required
-                      placeholder="John Doe"
-                      className="pl-10 bg-white/5 border-white/10 h-12 rounded-xl"
-                    />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium ml-1">Email Address</label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                    <Input
-                      name="email"
-                      type="email"
-                      required
-                      placeholder="john@example.com"
-                      className="pl-10 bg-white/5 border-white/10 h-12 rounded-xl"
-                    />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium ml-1">Your Message</label>
-                  <Textarea
-                    name="message"
-                    required
-                    placeholder="Tell me about your project..."
-                    className="bg-white/5 border-white/10 min-h-[150px] rounded-xl resize-none"
-                  />
-                </div>
-
-                <AnimatePresence>
-                  {status.type && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      className={`flex items-center gap-2 p-4 rounded-xl text-sm ${status.type === "success"
-                          ? "bg-emerald-500/10 text-emerald-500 border border-emerald-500/20"
-                          : "bg-destructive/10 text-destructive border border-destructive/20"
-                        }`}
-                    >
-                      {status.type === "success" ? (
-                        <CheckCircle2 className="w-4 h-4 shrink-0" />
-                      ) : (
-                        <AlertCircle className="w-4 h-4 shrink-0" />
-                      )}
-                      {status.message}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                <Button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full h-12 rounded-xl gap-2 font-bold group"
-                >
-                  {isSubmitting ? (
-                    <span className="flex items-center gap-2">
-                      <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                      Sending...
-                    </span>
-                  ) : (
-                    <>
-                      Send Message
-                      <Send className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-                    </>
-                  )}
-                </Button>
-              </form>
-            </Card>
-          </motion.div>
+          <div className="flex items-center gap-3.5">
+            <div
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[9px] brand-icon-tile"
+              style={{ color: "var(--brand-accent-ink)" }}
+            >
+              <MessageSquare className="w-4 h-4" />
+            </div>
+            <div>
+              <div className="font-mono text-[10px] uppercase tracking-wider text-[var(--text-faint)]">
+                Discord / Telegram
+              </div>
+              <div className="text-sm font-semibold text-foreground">@nimatrazmjo</div>
+            </div>
+          </div>
         </div>
       </div>
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0.97 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+      >
+        <Card className="block p-8 rounded-[20px] border-border">
+          <form className="space-y-[18px]" onSubmit={handleSubmit}>
+            <div>
+              <label className="block text-xs font-bold text-foreground mb-1.5">Full Name</label>
+              <Input
+                name="name"
+                required
+                placeholder="John Doe"
+                className="h-auto py-2.5 rounded-[10px]"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-foreground mb-1.5">Email Address</label>
+              <Input
+                name="email"
+                type="email"
+                required
+                placeholder="john@example.com"
+                className="h-auto py-2.5 rounded-[10px]"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-foreground mb-1.5">Your Message</label>
+              <Textarea
+                name="message"
+                required
+                rows={4}
+                placeholder="Tell me about your project..."
+                className="rounded-[10px] resize-y"
+              />
+            </div>
+
+            <AnimatePresence>
+              {status.type && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className={`flex items-center gap-2 p-3.5 rounded-[10px] text-sm ${status.type === "success"
+                      ? "bg-emerald-500/10 text-emerald-600 border border-emerald-500/20"
+                      : "bg-destructive/10 text-destructive border border-destructive/20"
+                    }`}
+                >
+                  {status.type === "success" ? (
+                    <CheckCircle2 className="w-4 h-4 shrink-0" />
+                  ) : (
+                    <AlertCircle className="w-4 h-4 shrink-0" />
+                  )}
+                  {status.message}
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full h-auto py-3.5 rounded-[10px] font-mono text-[13px] font-semibold"
+            >
+              {isSubmitting ? (
+                <span className="flex items-center gap-2">
+                  <div className="w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                  Sending...
+                </span>
+              ) : (
+                "Send Message ➤"
+              )}
+            </Button>
+          </form>
+        </Card>
+      </motion.div>
     </section>
   )
 }

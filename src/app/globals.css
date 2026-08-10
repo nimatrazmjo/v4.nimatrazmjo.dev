@@ -1,13 +1,15 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Site is light-only; keep dark: as inert class-strategy so it never
+   follows OS prefers-color-scheme (no .dark class is ever applied). */
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-manrope);
+  --font-mono: var(--font-plex-mono);
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -41,49 +43,45 @@
       background-position: -200% 0;
     }
   }
+
+  --animate-pulse-dot: pulse-dot 1.6s ease-in-out infinite;
+  @keyframes pulse-dot {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.25;
+    }
+  }
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  --background: oklch(98.4% 0.003 240);
+  --foreground: oklch(17% 0.012 240);
+  --card: oklch(100% 0 0);
+  --card-foreground: oklch(17% 0.012 240);
+  --popover: oklch(100% 0 0);
+  --popover-foreground: oklch(17% 0.012 240);
+  --primary: oklch(19% 0.01 240);
+  --primary-foreground: oklch(98% 0.003 240);
+  --secondary: oklch(96% 0.004 240);
+  --secondary-foreground: oklch(19% 0.01 240);
+  --muted: oklch(96% 0.004 240);
+  --muted-foreground: oklch(50% 0.01 240);
+  --accent: oklch(96% 0.004 240);
+  --accent-foreground: oklch(19% 0.01 240);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --border: oklch(90% 0.006 240);
+  --input: oklch(88% 0.006 240);
+  --ring: #00d4ff;
   --radius: 0.75rem;
-}
 
-.dark {
-  --background: oklch(0.12 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.14 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.14 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.12 0 0);
-  --secondary: oklch(0.2 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.2 0 0);
-  --muted-foreground: oklch(0.7 0 0);
-  --accent: oklch(0.2 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.4 0.2 25);
-  --border: oklch(0.25 0 0);
-  --input: oklch(0.25 0 0);
-  --ring: oklch(0.985 0 0);
+  /* Brand tokens (design handoff) */
+  --brand-accent: #00d4ff;
+  --brand-accent-ink: oklch(46% 0.13 222);
+  --brand-accent-ink-hover: oklch(38% 0.14 222);
+  --text-faint: oklch(58% 0.008 240);
 }
 
 @layer base {
@@ -97,23 +95,37 @@
     @apply bg-background text-foreground selection:bg-primary/10 selection:text-primary;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
+  a {
+    color: var(--brand-accent-ink);
+  }
+  a:hover {
+    color: var(--brand-accent-ink-hover);
+  }
 }
 
 @layer utilities {
-  .glass {
-    @apply bg-background/60 backdrop-blur-xl border border-border;
+  .brand-chip {
+    color: var(--brand-accent-ink);
+    background: color-mix(in oklch, var(--brand-accent) 12%, white);
   }
 
-  .glass-card {
-    @apply bg-card/40 backdrop-blur-md border border-white/10 dark:border-white/5;
+  .brand-icon-tile {
+    background: color-mix(in oklch, var(--brand-accent) 16%, white);
   }
 
-  .text-gradient {
-    @apply bg-clip-text text-transparent bg-linear-to-br from-foreground to-foreground/60;
+  .brand-tint-panel {
+    background: color-mix(in oklch, var(--brand-accent) 6%, white);
   }
 
-  .text-vibrant {
-    @apply bg-clip-text text-transparent bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500;
+  .card-hover {
+    transition:
+      box-shadow 0.25s ease,
+      transform 0.25s ease,
+      border-color 0.25s ease;
+  }
+  .card-hover:hover {
+    box-shadow: 0 12px 30px oklch(20% 0.01 240 / 0.08);
+    transform: translateY(-3px);
+    border-color: oklch(80% 0.02 222);
   }
 }
-
