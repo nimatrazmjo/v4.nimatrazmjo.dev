@@ -13,6 +13,7 @@ import { CalendarButton } from "./calendar-button"
 
 const navItems = [
   { name: "Home", href: "/#" },
+  { name: "Projects", href: "/#projects" },
   { name: "Articles", href: "/#articles" },
   { name: "Contact", href: "/#contact" },
 ]
