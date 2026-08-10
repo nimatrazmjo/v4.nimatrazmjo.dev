@@ -3,7 +3,8 @@ import { HashNode } from "@/types/hashnode.type";
 
 export const mediumBlogs = async (): Promise<HashNode[]> => {
   const response = await fetch(
-    `https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@nimatrazmjo`
+    `https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@nimatrazmjo`,
+    { next: { revalidate: 3600 }, signal: AbortSignal.timeout(8000) }
   );
   const data = await response.json();
   const formatedData = data.items?.map((item: any) => {

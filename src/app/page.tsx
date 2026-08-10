@@ -8,6 +8,8 @@ import { ArticlesContent } from "@/components/articles-content";
 import fetchAllBlogs from "@/actions/articles/articles";
 import { Suspense } from "react";
 
+export const revalidate = 3600;
+
 export default async function Home() {
   const { articles, totalPages } = await fetchAllBlogs({ page: 1 });
 

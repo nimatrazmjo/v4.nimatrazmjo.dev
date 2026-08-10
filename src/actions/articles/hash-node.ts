@@ -1,10 +1,7 @@
 "use server";
 import { HashNode } from "@/types/hashnode.type";
-import { unstable_noStore as noStore } from "next/cache";
 
 export const hashNodeBlogs = async (): Promise<HashNode[] | undefined> => {
-  noStore();
-
   const query = {
     query: `
 query Publication {
@@ -35,13 +32,14 @@ query Publication {
   };
 
   try {
-    const timestamp = Date.now();
-    const response = await fetch("https://gql.hashnode.com?timestamp=" + timestamp, {
+    const response = await fetch("https://gql.hashnode.com", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(query),
+      next: { revalidate: 3600 },
+      signal: AbortSignal.timeout(8000),
     });
 
     if (!response.ok) {

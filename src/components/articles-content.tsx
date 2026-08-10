@@ -88,6 +88,7 @@ export function ArticlesContent({ initialArticles, totalPages }: ArticlesContent
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search articles by title or tag..."
+            aria-label="Search articles by title or tag"
             className="pl-12 h-14 bg-white/5 border-white/10 rounded-2xl text-lg focus:ring-primary/20"
           />
         </div>
@@ -103,8 +104,17 @@ export function ArticlesContent({ initialArticles, totalPages }: ArticlesContent
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.2 }}
               >
-                <Link href={article.url} target="_blank">
+                <Link href={article.url} target="_blank" rel="noopener noreferrer">
                   <Card className="p-6 glass-card hover:bg-white/5 transition-all group border-white/5">
+                    {article.coverImage && (
+                      // eslint-disable-next-line @next/next/no-img-element -- external CDN domains vary per source, not worth allowlisting for a listing thumbnail
+                      <img
+                        src={article.coverImage}
+                        alt=""
+                        loading="lazy"
+                        className="w-full aspect-video object-cover rounded-xl mb-4 border border-white/5"
+                      />
+                    )}
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
                       <div className="flex flex-wrap gap-2">
                         {article.tags.map((tag) => (

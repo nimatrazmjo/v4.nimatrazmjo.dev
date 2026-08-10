@@ -35,7 +35,7 @@ export function Newsletter() {
         >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium mb-6">
             <Sparkles className="w-3 h-3" />
-            <span>Join 500+ Engineers</span>
+            <span>Engineering Newsletter</span>
           </div>
 
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-balance">

@@ -5,7 +5,8 @@ export const substackBlogs = async (
   substackUsername: string
 ): Promise<HashNode[]> => {
   const response = await fetch(
-    `https://api.rss2json.com/v1/api.json?rss_url=https://${substackUsername}.substack.com/feed`
+    `https://api.rss2json.com/v1/api.json?rss_url=https://${substackUsername}.substack.com/feed`,
+    { next: { revalidate: 3600 }, signal: AbortSignal.timeout(8000) }
   );
 
   if (!response.ok) {

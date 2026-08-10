@@ -16,7 +16,7 @@ export function Footer() {
     setMounted(true);
   }, []);
 
-  const logoSrc = mounted && resolvedTheme === "dark"
+  const logoSrc = !mounted || resolvedTheme === "dark"
     ? "/images/white-logo.svg"
     : "/images/black-logo.svg";
 

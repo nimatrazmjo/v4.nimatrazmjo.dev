@@ -27,7 +27,7 @@ export function Navbar() {
     setMounted(true)
   }, [])
 
-  const logoSrc = mounted && resolvedTheme === "dark"
+  const logoSrc = !mounted || resolvedTheme === "dark"
     ? "/images/white-logo.svg"
     : "/images/black-logo.svg"
 
@@ -84,6 +84,8 @@ export function Navbar() {
             <button
               className="md:hidden"
               onClick={() => setIsOpen(!isOpen)}
+              aria-label={isOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isOpen}
             >
               {isOpen ? <X /> : <Menu />}
             </button>
