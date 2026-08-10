@@ -106,7 +106,7 @@ export function ArticlesContent({ initialArticles, totalPages }: ArticlesContent
               >
                 <Link href={article.url} target="_blank" rel="noopener noreferrer">
                   <Card className="p-6 glass-card hover:bg-white/5 transition-all group border-white/5">
-                    {article.coverImage && (
+                    {article.coverImage && article.source === "hashnode" && (
                       // eslint-disable-next-line @next/next/no-img-element -- external CDN domains vary per source, not worth allowlisting for a listing thumbnail
                       <img
                         src={article.coverImage}
