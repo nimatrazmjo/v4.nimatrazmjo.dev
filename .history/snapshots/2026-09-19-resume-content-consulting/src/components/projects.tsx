@@ -5,27 +5,9 @@ import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { SectionBand } from "@/components/ui/section-band"
 import { SectionIntro } from "@/components/ui/section-intro"
-import { ArrowLeftRight, Gauge, Hexagon, Target, Code2, Workflow } from "lucide-react"
+import { ArrowLeftRight, Hexagon, Target, Code2 } from "lucide-react"
 
-// Reverse-chronological, mirroring the resume. Company names and role titles
-// match it exactly.
 const projects = [
-  {
-    title: "Job-Competency Data Pipeline",
-    role: "Senior Software Engineer, Korn Ferry",
-    description:
-      "Built a FastAPI pipeline that ingests job-competency data from a third-party vendor, reshapes it to internal spec, and routes it both to the application for display and to a machine-learning model as training data.",
-    stack: ["FastAPI", "Python", "AWS"],
-    icon: Workflow,
-  },
-  {
-    title: "Production Performance Optimization",
-    role: "Senior Software Engineer, Korn Ferry",
-    description:
-      "Improved main-page performance through full-stack optimization — profiling hot paths, adding partial caching, refactoring backend logic, and denormalizing targeted stored procedures under production load.",
-    stack: ["NestJS", "MSSQL", "Angular", "Caching"],
-    icon: Gauge,
-  },
   {
     title: "Real-Time Live Sports Platform",
     role: "Lead Software Engineer, Draft Nation",
@@ -35,16 +17,8 @@ const projects = [
     icon: ArrowLeftRight,
   },
   {
-    title: "Automated Coding Assessment Platform",
-    role: "Senior Software Developer, EliteBrains",
-    description:
-      "Built an online coding-assessment platform with Judge0, Node.js, Python, and React that automated candidate code execution and scoring, replacing a slower manual review process.",
-    stack: ["Judge0", "Node.js", "Python", "React"],
-    icon: Code2,
-  },
-  {
     title: "Monolith to Microservices Migration",
-    role: "Senior Software Developer, NETLINKS Inc",
+    role: "Senior Software Developer, Netlinks Inc",
     description:
       "Led migration of a high-traffic job portal from a legacy PHP monolith to a MEAN-stack microservices architecture, decoupling tightly coupled modules into independently deployable services.",
     stack: ["Node.js", "Angular", "MongoDB", "AWS", "Terraform", "Docker"],
@@ -52,11 +26,19 @@ const projects = [
   },
   {
     title: "Education Portal at 1M+ Users",
-    role: "Software Developer, NETLINKS Inc",
+    role: "Software Developer, Netlinks Inc",
     description:
       "Built a knowledge-management and education portal serving 1M+ users, designing the relational schema, backend APIs, and caching strategy that held performance steady under rising read load.",
     stack: ["Laravel", "MySQL", "Caching"],
     icon: Target,
+  },
+  {
+    title: "Automated Coding Assessment Platform",
+    role: "Senior Software Developer, EliteBrains",
+    description:
+      "Built an online coding-assessment platform with Judge0, Node.js, Python, and React that automated candidate code execution and scoring, replacing a slower manual review process.",
+    stack: ["Judge0", "Node.js", "Python", "React"],
+    icon: Code2,
   },
 ]
 

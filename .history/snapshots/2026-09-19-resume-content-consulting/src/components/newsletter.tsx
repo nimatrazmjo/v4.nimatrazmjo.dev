@@ -6,7 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SectionBand } from "@/components/ui/section-band";
 import { SectionIntro } from "@/components/ui/section-intro";
-import { CAPABILITIES } from "@/config";
+
+const capabilities = [
+  "Scalable Systems",
+  "Cloud-Native Architecture",
+  "High-Traffic APIs",
+  "Production-Grade DevOps",
+];
 
 export function Newsletter() {
   const [email, setEmail] = useState("");
@@ -66,7 +72,7 @@ export function Newsletter() {
         </p>
 
         <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 font-mono text-meta uppercase text-band-ink-muted">
-          {CAPABILITIES.map((label) => (
+          {capabilities.map((label) => (
             <span key={label} className="inline-flex items-center gap-2">
               <span className="h-1 w-1 rounded-full bg-brand" />
               {label}

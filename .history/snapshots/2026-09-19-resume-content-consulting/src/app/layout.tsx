@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
-import { CAPABILITIES, ROLE, YEARS_EXPERIENCE } from "@/config";
 
 // Display + body face. Headlines lean on 800; body sits at 400/500.
 const inter = Inter({
@@ -19,11 +18,9 @@ const plexMono = IBM_Plex_Mono({
 });
 
 const SITE_URL = "https://nimatrazmjo.dev";
-const SITE_TITLE = `Nimat Razmjo | ${ROLE}`;
+const SITE_TITLE = "Nimat Razmjo | Lead Software Engineer";
 const SITE_DESCRIPTION =
-  `${ROLE} with ${YEARS_EXPERIENCE} years building and operating production web services end to end — ` +
-  "React and Next.js front ends, Python/FastAPI and Node.js backends, and AWS infrastructure. " +
-  "Available for consulting engagements.";
+  "Lead Software Engineer with 12+ years experience building high-traffic APIs, scalable backend systems, and modern full-stack applications.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -35,9 +32,10 @@ export const metadata: Metadata = {
   keywords: [
     "Nimat Razmjo",
     "Software Engineer",
-    ROLE,
-    "Software Consulting",
-    ...CAPABILITIES,
+    "Lead Software Engineer",
+    "Scalable Systems",
+    "Cloud-Native Architecture",
+    "Backend Engineering",
   ],
   authors: [{ name: "Nimat Razmjo", url: SITE_URL }],
   creator: "Nimat Razmjo",
@@ -77,23 +75,13 @@ const personJsonLd = {
   "@type": "Person",
   name: "Nimat Razmjo",
   url: SITE_URL,
-  jobTitle: ROLE,
+  jobTitle: "Lead Software Engineer",
   sameAs: [
     "https://github.com/nimatrazmjo",
     "https://linkedin.com/in/nimatrazmjo",
     "https://twitter.com/nimatrazmjo",
     "https://nimatrazmjo.substack.com",
   ],
-  hasCredential: {
-    "@type": "EducationalOccupationalCredential",
-    name: "AWS Certified AI Practitioner (AIF-C01)",
-    credentialCategory: "certification",
-    recognizedBy: { "@type": "Organization", name: "Amazon Web Services" },
-  },
-  alumniOf: {
-    "@type": "CollegeOrUniversity",
-    name: "University of Pune",
-  },
 };
 
 export default function RootLayout({

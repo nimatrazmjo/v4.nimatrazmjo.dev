@@ -69,10 +69,9 @@ export function Contact() {
           <h2 className="text-display-md mb-[18px] text-band-ink">
             Let&apos;s build something <span className="text-brand-ink">extraordinary</span> together.
           </h2>
-          <p className="text-lead mb-9 max-w-[440px] text-band-ink-muted">
-            I&apos;m not looking for full-time roles, but I&apos;m open to consulting
-            engagements — backend and cloud architecture, migrations, or shipping a
-            feature end to end. My inbox is always open.
+          <p className="text-lead mb-9 max-w-[420px] text-band-ink-muted">
+            Whether you have a specific project in mind or just want to chat about
+            the latest in cloud architecture and web dev, my inbox is always open.
           </p>
 
           <div className="flex flex-col gap-5">

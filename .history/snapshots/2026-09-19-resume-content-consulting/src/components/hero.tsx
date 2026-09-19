@@ -6,7 +6,13 @@ import { Button } from "@/components/ui/button"
 import { Eyebrow } from "@/components/ui/eyebrow"
 import { SectionBand } from "@/components/ui/section-band"
 import { ResponseBlock } from "@/components/response-block"
-import { AVAILABILITY, CAPABILITIES, ROLE, YEARS_EXPERIENCE } from "@/config"
+
+const capabilities = [
+  "Scalable Systems",
+  "Cloud-Native Architecture",
+  "High-Traffic APIs",
+  "Production-Grade DevOps",
+]
 
 export function Hero() {
   return (
@@ -18,7 +24,7 @@ export function Hero() {
           transition={{ duration: 0.5 }}
         >
           <Eyebrow dot className="mb-8">
-            {AVAILABILITY}
+            Available for new projects
           </Eyebrow>
 
           <h1 className="text-display-xl mb-6 text-band-ink">
@@ -28,9 +34,8 @@ export function Hero() {
           </h1>
 
           <p className="text-lead mb-10 max-w-[560px] text-band-ink-muted">
-            Nimat Razmjo — {ROLE} with {YEARS_EXPERIENCE} years building and operating
-            production web services end to end: React and Next.js front ends, Python/FastAPI
-            and Node.js backends, and AWS infrastructure.
+            Nimat Razmjo — Lead Software Engineer with 12+ years experience building high-traffic APIs,
+            optimized backend systems, and modern full-stack applications.
           </p>
 
           <div className="mb-12 flex flex-wrap items-center gap-3.5">
@@ -43,7 +48,7 @@ export function Hero() {
           </div>
 
           <div className="flex flex-wrap items-center gap-x-7 gap-y-3 font-mono text-meta uppercase text-band-ink-muted">
-            {CAPABILITIES.map((label) => (
+            {capabilities.map((label) => (
               <span key={label} className="inline-flex items-center gap-2">
                 <span className="h-1 w-1 rounded-full bg-brand" />
                 {label}

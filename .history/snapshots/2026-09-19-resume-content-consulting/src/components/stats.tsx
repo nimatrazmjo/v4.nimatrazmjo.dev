@@ -3,12 +3,11 @@
 import { motion } from "framer-motion"
 import { SectionBand } from "@/components/ui/section-band"
 import { StatDisplay, StatRow } from "@/components/ui/stat-display"
-import { YEARS_EXPERIENCE } from "@/config"
 
 const stats = [
-  { label: "Years Experience", value: YEARS_EXPERIENCE },
+  { label: "Years Experience", value: "12+" },
   { label: "Technologies", value: "40+" },
-  { label: "Certifications", value: "1" },
+  { label: "Certifications", value: "2" },
   { label: "Projects Completed", value: "20+" },
 ]
 
