@@ -7,9 +7,10 @@ import { cn } from "@/lib/utils"
 /**
  * The site's visual motif: a live-looking API response.
  *
- * The hero's visual anchor. Elsewhere the motif is echoed by the `.motif-grid`
- * texture derived from it rather than by a second copy of the panel — ghosting
- * this behind body copy is unreadable, so don't.
+ * Used full-size as the hero's visual anchor, and at `tone="faint"` as a
+ * quiet echo elsewhere (footer). Paired with the `.motif-grid` texture on
+ * dark bands, it's the one recurring device that says "backend/infra"
+ * without needing an illustration.
  */
 type Line = {
   indent?: number
@@ -41,8 +42,15 @@ const LINES: Line[] = [
   { punct: "}" },
 ]
 
-export function ResponseBlock({ className }: { className?: string }) {
+export function ResponseBlock({
+  tone = "solid",
+  className,
+}: {
+  tone?: "solid" | "faint"
+  className?: string
+}) {
   const reduceMotion = useReducedMotion()
+  const faint = tone === "faint"
 
   return (
     <div
@@ -52,6 +60,7 @@ export function ResponseBlock({ className }: { className?: string }) {
         "relative overflow-hidden rounded-2xl border border-white/10 bg-[oklch(19%_0.03_250)]",
         "font-mono text-[12.5px] leading-[1.75] sm:text-[13px]",
         "shadow-[0_24px_60px_oklch(20%_0.03_250/0.18)]",
+        faint && "opacity-45 shadow-none",
         className
       )}
     >
@@ -72,8 +81,8 @@ export function ResponseBlock({ className }: { className?: string }) {
             <motion.span
               key={i}
               className="block whitespace-pre"
-              initial={reduceMotion ? false : { opacity: 0, x: -6 }}
-              animate={reduceMotion ? undefined : { opacity: 1, x: 0 }}
+              initial={reduceMotion || faint ? false : { opacity: 0, x: -6 }}
+              animate={reduceMotion || faint ? undefined : { opacity: 1, x: 0 }}
               transition={{ delay: 0.35 + i * 0.09, duration: 0.3 }}
             >
               {"  ".repeat(line.indent ?? 0)}
@@ -90,7 +99,9 @@ export function ResponseBlock({ className }: { className?: string }) {
               )}
             </motion.span>
           ))}
-          <span className="inline-block h-[1.1em] w-[7px] translate-y-[2px] bg-brand/80 animate-caret" />
+          {!faint && (
+            <span className="inline-block h-[1.1em] w-[7px] translate-y-[2px] bg-brand/80 animate-caret" />
+          )}
         </code>
       </pre>
     </div>

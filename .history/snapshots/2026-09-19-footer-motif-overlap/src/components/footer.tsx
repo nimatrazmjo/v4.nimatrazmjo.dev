@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { SectionBand } from "@/components/ui/section-band"
+import { ResponseBlock } from "@/components/response-block"
 import { Github, Linkedin, Twitter } from "lucide-react"
 
 const SUBSTACK_URL = "https://nimatrazmjo.substack.com"
@@ -21,10 +22,19 @@ const navLinks = [
 
 export function Footer() {
   return (
-    // No texture of its own: contact is dark too, so the grid there carries the
-    // whole dark run. Giving the footer its own .motif-grid restarted the fade
-    // at this band's top edge, reading as a divider at the seam.
-    <SectionBand as="footer" tone="dark" inner="pt-14 pb-8">
+    <SectionBand
+      as="footer"
+      tone="dark"
+      texture
+      className="overflow-hidden"
+      inner="pt-14 pb-8"
+    >
+      {/* Faint echo of the hero motif — background texture, clipped by the band. */}
+      <ResponseBlock
+        tone="faint"
+        className="pointer-events-none absolute -bottom-12 -right-16 hidden w-[340px] rotate-2 border-white/[0.06] opacity-30 lg:block"
+      />
+
       <div className="relative mb-12 grid grid-cols-1 gap-12 md:grid-cols-4">
         <div className="md:col-span-2">
           <div className="mb-3.5 flex items-center gap-2.5 font-mono text-sm font-semibold text-band-ink">
