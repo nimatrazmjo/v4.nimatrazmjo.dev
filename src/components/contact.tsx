@@ -5,9 +5,15 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Card } from "@/components/ui/card"
+import { Eyebrow } from "@/components/ui/eyebrow"
+import { SectionBand } from "@/components/ui/section-band"
 import { Mail, MessageSquare, CheckCircle2, AlertCircle } from "lucide-react"
 import { sendEmail } from "@/actions/contact"
+
+const channels = [
+  { icon: Mail, label: "Email Me At", value: "nimatullah.razmjo@gmail.com" },
+  { icon: MessageSquare, label: "Discord / Telegram", value: "@nimatrazmjo" },
+]
 
 export function Contact() {
   const [isSubmitting, setIsSubmitting] = React.useState(false)
@@ -43,7 +49,7 @@ export function Contact() {
           message: result.error || "Failed to send message.",
         })
       }
-    } catch (error) {
+    } catch {
       setStatus({
         type: "error",
         message: "An unexpected error occurred. Please try again.",
@@ -54,83 +60,78 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="pb-[130px] grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-      <div>
-        <h2 className="text-[clamp(30px,3.6vw,40px)] font-extrabold tracking-[-0.01em] leading-[1.15] text-foreground mb-[18px]">
-          Let&apos;s build something{" "}
-          <span style={{ color: "var(--brand-accent-ink)" }}>extraordinary</span> together.
-        </h2>
-        <p className="text-muted-foreground text-[15px] mb-9 leading-relaxed max-w-[420px]">
-          Whether you have a specific project in mind or just want to chat about
-          the latest in cloud architecture and web dev, my inbox is always open.
-        </p>
+    <SectionBand id="contact" tone="dark" texture inner="py-[112px]">
+      <div className="grid grid-cols-1 items-start gap-16 lg:grid-cols-2">
+        <div>
+          <Eyebrow index="04" className="mb-5">
+            Get in Touch
+          </Eyebrow>
+          <h2 className="text-display-md mb-[18px] text-band-ink">
+            Let&apos;s build something <span className="text-brand-ink">extraordinary</span> together.
+          </h2>
+          <p className="text-lead mb-9 max-w-[420px] text-band-ink-muted">
+            Whether you have a specific project in mind or just want to chat about
+            the latest in cloud architecture and web dev, my inbox is always open.
+          </p>
 
-        <div className="flex flex-col gap-5">
-          <div className="flex items-center gap-3.5">
-            <div
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[9px] brand-icon-tile"
-              style={{ color: "var(--brand-accent-ink)" }}
-            >
-              <Mail className="w-4 h-4" />
-            </div>
-            <div>
-              <div className="font-mono text-[10px] uppercase tracking-wider text-[var(--text-faint)]">
-                Email Me At
+          <div className="flex flex-col gap-5">
+            {channels.map(({ icon: Icon, label, value }) => (
+              <div key={label} className="flex items-center gap-3.5">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[9px] brand-icon-tile">
+                  <Icon className="h-4 w-4" />
+                </div>
+                <div>
+                  <div className="font-mono text-meta uppercase text-band-ink-faint">{label}</div>
+                  <div className="text-sm font-semibold text-band-ink">{value}</div>
+                </div>
               </div>
-              <div className="text-sm font-semibold text-foreground">nimatullah.razmjo@gmail.com</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-3.5">
-            <div
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[9px] brand-icon-tile"
-              style={{ color: "var(--brand-accent-ink)" }}
-            >
-              <MessageSquare className="w-4 h-4" />
-            </div>
-            <div>
-              <div className="font-mono text-[10px] uppercase tracking-wider text-[var(--text-faint)]">
-                Discord / Telegram
-              </div>
-              <div className="text-sm font-semibold text-foreground">@nimatrazmjo</div>
-            </div>
+            ))}
           </div>
         </div>
-      </div>
 
-      <motion.div
-        initial={{ opacity: 0, scale: 0.97 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-      >
-        <Card className="block p-8 rounded-[20px] border-border">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.97 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="rounded-[20px] border border-band-rule bg-white/[0.035] p-8 backdrop-blur-sm"
+        >
           <form className="space-y-[18px]" onSubmit={handleSubmit}>
             <div>
-              <label className="block text-xs font-bold text-foreground mb-1.5">Full Name</label>
+              <label htmlFor="contact-name" className="mb-1.5 block font-mono text-meta uppercase text-band-ink-muted">
+                Full Name
+              </label>
               <Input
+                id="contact-name"
                 name="name"
                 required
                 placeholder="John Doe"
-                className="h-auto py-2.5 rounded-[10px]"
+                className="h-auto rounded-[10px] border-band-rule bg-transparent py-2.5 text-band-ink placeholder:text-band-ink-faint"
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-foreground mb-1.5">Email Address</label>
+              <label htmlFor="contact-email" className="mb-1.5 block font-mono text-meta uppercase text-band-ink-muted">
+                Email Address
+              </label>
               <Input
+                id="contact-email"
                 name="email"
                 type="email"
                 required
                 placeholder="john@example.com"
-                className="h-auto py-2.5 rounded-[10px]"
+                className="h-auto rounded-[10px] border-band-rule bg-transparent py-2.5 text-band-ink placeholder:text-band-ink-faint"
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-foreground mb-1.5">Your Message</label>
+              <label htmlFor="contact-message" className="mb-1.5 block font-mono text-meta uppercase text-band-ink-muted">
+                Your Message
+              </label>
               <Textarea
+                id="contact-message"
                 name="message"
                 required
                 rows={4}
                 placeholder="Tell me about your project..."
-                className="rounded-[10px] resize-y"
+                className="resize-y rounded-[10px] border-band-rule bg-transparent text-band-ink placeholder:text-band-ink-faint"
               />
             </div>
 
@@ -140,38 +141,37 @@ export function Contact() {
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
-                  className={`flex items-center gap-2 p-3.5 rounded-[10px] text-sm ${status.type === "success"
-                      ? "bg-emerald-500/10 text-emerald-600 border border-emerald-500/20"
-                      : "bg-destructive/10 text-destructive border border-destructive/20"
-                    }`}
+                  role="status"
+                  className={`flex items-center gap-2 rounded-[10px] p-3.5 text-sm ${
+                    status.type === "success"
+                      ? "border border-emerald-400/25 bg-emerald-400/10 text-emerald-300"
+                      : "border border-red-400/25 bg-red-400/10 text-red-300"
+                  }`}
                 >
                   {status.type === "success" ? (
-                    <CheckCircle2 className="w-4 h-4 shrink-0" />
+                    <CheckCircle2 className="h-4 w-4 shrink-0" />
                   ) : (
-                    <AlertCircle className="w-4 h-4 shrink-0" />
+                    <AlertCircle className="h-4 w-4 shrink-0" />
                   )}
                   {status.message}
                 </motion.div>
               )}
             </AnimatePresence>
 
-            <Button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full h-auto py-3.5 rounded-[10px] font-mono text-[13px] font-semibold"
-            >
+            {/* Same solid pill as the hero primary — no one-off submit treatment. */}
+            <Button type="submit" variant="primary" disabled={isSubmitting} className="w-full">
               {isSubmitting ? (
-                <span className="flex items-center gap-2">
-                  <div className="w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                <>
+                  <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-current border-t-transparent" />
                   Sending...
-                </span>
+                </>
               ) : (
-                "Send Message ➤"
+                "Send Message"
               )}
             </Button>
           </form>
-        </Card>
-      </motion.div>
-    </section>
+        </motion.div>
+      </div>
+    </SectionBand>
   )
 }

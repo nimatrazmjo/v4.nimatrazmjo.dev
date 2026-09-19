@@ -6,8 +6,6 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Input } from "@/components/ui/input"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { SectionBand } from "@/components/ui/section-band"
-import { SectionIntro } from "@/components/ui/section-intro"
 import { Search } from "lucide-react"
 import Link from "next/link"
 import { ArticleType } from "@/types/article.type"
@@ -69,17 +67,19 @@ export function ArticlesContent({ initialArticles, totalPages }: ArticlesContent
   }, [loadMore, hasMore, loading, search])
 
   return (
-    <SectionBand id="articles" tone="base" inner="py-[112px] text-center">
-      <SectionIntro
-        index="02"
-        eyebrow="Articles & Insights"
-        title="Engineering Notes"
-        lead="Deep dives into software architecture, cloud native patterns, and modern web development."
-        className="mb-11"
-      />
+    <section id="articles" className="pb-[100px] text-center">
+      <div className="inline-block mb-5 rounded-full border border-border px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+        Articles &amp; Insights
+      </div>
+      <h2 className="text-[clamp(32px,4vw,42px)] font-extrabold tracking-[-0.01em] text-foreground mb-4">
+        Engineering Notes
+      </h2>
+      <p className="text-base text-muted-foreground max-w-[520px] mx-auto mb-11 leading-relaxed">
+        Deep dives into software architecture, cloud native patterns, and modern web development.
+      </p>
 
       <div className="relative max-w-[640px] mx-auto mb-10">
-        <Search className="absolute left-[18px] top-1/2 -translate-y-1/2 w-4 h-4 text-band-ink-faint pointer-events-none" />
+        <Search className="absolute left-[18px] top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
         <Input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -101,7 +101,7 @@ export function ArticlesContent({ initialArticles, totalPages }: ArticlesContent
               transition={{ duration: 0.2 }}
             >
               <Link href={article.url} target="_blank" rel="noopener noreferrer">
-                <Card className="block p-7 rounded-2xl rounded-l-[4px] border-border brand-rule-left transition-colors">
+                <Card className="block p-7 rounded-2xl border-border transition-colors hover:border-[oklch(80%_0.02_222)]">
                   {article.coverImage && article.source === "hashnode" && (
                     // eslint-disable-next-line @next/next/no-img-element -- external CDN domains vary per source, not worth allowlisting for a listing thumbnail
                     <img
@@ -116,16 +116,16 @@ export function ArticlesContent({ initialArticles, totalPages }: ArticlesContent
                       {article.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="rounded-[6px] px-2 py-1 font-mono text-meta uppercase brand-chip"
+                          className="rounded-[6px] px-2 py-1 font-mono text-[10px] tracking-wider brand-chip"
                         >
                           {tag}
                         </span>
                       ))}
-                      <span className="rounded-[6px] px-2 py-1 font-mono text-meta uppercase brand-chip">
+                      <span className="rounded-[6px] px-2 py-1 font-mono text-[10px] tracking-wider brand-chip">
                         {article.source}
                       </span>
                     </div>
-                    <div className="font-mono text-meta text-band-ink-faint whitespace-nowrap">
+                    <div className="font-mono text-[11px] text-[var(--text-faint)] whitespace-nowrap">
                       {new Date(article.date).toLocaleDateString("en-US", {
                         month: "short",
                         day: "numeric",
@@ -134,12 +134,12 @@ export function ArticlesContent({ initialArticles, totalPages }: ArticlesContent
                       {article.readingTime ? ` · ${article.readingTime} min read` : ""}
                     </div>
                   </div>
-                  <h3 className="text-display-sm mb-2 text-band-ink">{article.title}</h3>
-                  <p className="text-sm leading-relaxed text-band-ink-muted mb-3">
+                  <h3 className="text-[17px] font-bold mb-2 text-foreground">{article.title}</h3>
+                  <p className="text-sm leading-relaxed text-foreground/80 mb-3">
                     {article.excerpt || article.brief}
                   </p>
-                  <span className="font-mono text-meta uppercase text-brand-ink">
-                    Read on {article.source}
+                  <span className="font-mono text-xs font-semibold" style={{ color: "var(--brand-accent-ink)" }}>
+                    Read on {article.source} →
                   </span>
                 </Card>
               </Link>
@@ -148,9 +148,9 @@ export function ArticlesContent({ initialArticles, totalPages }: ArticlesContent
         </AnimatePresence>
 
         {filteredArticles.length === 0 && (
-          <div className="text-center py-16 text-band-ink-muted">
-            <p className="text-sm">No articles match &quot;{search}&quot;.</p>
-            <Button variant="secondary" size="sm" onClick={() => setSearch("")} className="mt-4">
+          <div className="text-center py-16 font-mono text-sm text-muted-foreground">
+            <p>No articles match &quot;{search}&quot;.</p>
+            <Button variant="link" onClick={() => setSearch("")} className="mt-2 font-mono">
               Clear search
             </Button>
           </div>
@@ -158,20 +158,20 @@ export function ArticlesContent({ initialArticles, totalPages }: ArticlesContent
 
         <div ref={loaderRef} className="py-10 text-center">
           {loading && (
-            <div className="flex justify-center items-center gap-2 text-band-ink-muted animate-pulse">
-              <div className="w-1.5 h-1.5 rounded-full bg-brand" />
-              <div className="w-1.5 h-1.5 rounded-full bg-brand" />
-              <div className="w-1.5 h-1.5 rounded-full bg-brand" />
-              <span className="ml-2 font-mono text-meta uppercase">Loading more insights...</span>
+            <div className="flex justify-center items-center gap-2 text-muted-foreground animate-pulse">
+              <div className="w-1.5 h-1.5 rounded-full bg-foreground" />
+              <div className="w-1.5 h-1.5 rounded-full bg-foreground" />
+              <div className="w-1.5 h-1.5 rounded-full bg-foreground" />
+              <span className="ml-2 font-mono text-xs">Loading more insights...</span>
             </div>
           )}
           {!hasMore && articles.length > 0 && !search && (
-            <p className="font-mono text-meta uppercase text-band-ink-faint">
+            <p className="font-mono text-xs text-[var(--text-faint)]">
               — you&apos;ve reached the end of the technical log —
             </p>
           )}
         </div>
       </div>
-    </SectionBand>
+    </section>
   )
 }

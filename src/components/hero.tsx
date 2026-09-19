@@ -1,8 +1,11 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { Eyebrow } from "@/components/ui/eyebrow"
+import { SectionBand } from "@/components/ui/section-band"
+import { ResponseBlock } from "@/components/response-block"
 
 const capabilities = [
   "Scalable Systems",
@@ -13,50 +16,58 @@ const capabilities = [
 
 export function Hero() {
   return (
-    <section id="home" className="pt-[120px] pb-[88px] text-center">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="inline-flex items-center gap-2 mb-8 rounded-full border border-border px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
-          <span
-            className="h-1.5 w-1.5 rounded-full animate-pulse-dot"
-            style={{ background: "var(--brand-accent)" }}
-          />
-          Available for new projects
-        </div>
+    <SectionBand id="home" tone="base" inner="pt-[104px] pb-[96px]">
+      <div className="grid items-center gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)] lg:gap-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Eyebrow dot className="mb-8">
+            Available for new projects
+          </Eyebrow>
 
-        <h1 className="text-[clamp(42px,6vw,72px)] font-extrabold tracking-[-0.02em] leading-[1.05] mb-6 text-foreground">
-          Designing Scalable
-          <br />
-          <span style={{ color: "var(--brand-accent-ink)" }}>Digital Experiences</span>
-        </h1>
+          <h1 className="text-display-xl mb-6 text-band-ink">
+            Designing Scalable
+            <br />
+            <span className="text-brand-ink">Digital Experiences</span>
+          </h1>
 
-        <p className="max-w-[600px] mx-auto text-lg leading-relaxed text-muted-foreground mb-10">
-          Nimat Razmjo — Lead Software Engineer with 12+ years experience building high-traffic APIs,
-          optimized backend systems, and modern full-stack applications.
-        </p>
+          <p className="text-lead mb-10 max-w-[560px] text-band-ink-muted">
+            Nimat Razmjo — Lead Software Engineer with 12+ years experience building high-traffic APIs,
+            optimized backend systems, and modern full-stack applications.
+          </p>
 
-        <div className="flex flex-wrap items-center justify-center gap-3.5 mb-14">
-          <Link href="#articles">
-            <Button className="rounded-full h-auto py-[14px] px-[26px] font-mono text-[13px] font-semibold">
-              Read Articles →
+          <div className="mb-12 flex flex-wrap items-center gap-3.5">
+            <Button asChild variant="primary">
+              <Link href="#articles">Read Articles</Link>
             </Button>
-          </Link>
-          <Link href="#contact">
-            <Button variant="outline" className="rounded-full h-auto py-[14px] px-[26px] font-mono text-[13px] font-semibold">
-              Get in Touch
+            <Button asChild variant="secondary">
+              <Link href="#contact">Get in Touch</Link>
             </Button>
-          </Link>
-        </div>
+          </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-7 font-mono text-xs text-muted-foreground">
-          {capabilities.map((label) => (
-            <span key={label}>◆ {label}</span>
-          ))}
-        </div>
-      </motion.div>
-    </section>
+          <div className="flex flex-wrap items-center gap-x-7 gap-y-3 font-mono text-meta uppercase text-band-ink-muted">
+            {capabilities.map((label) => (
+              <span key={label} className="inline-flex items-center gap-2">
+                <span className="h-1 w-1 rounded-full bg-brand" />
+                {label}
+              </span>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Visual anchor — the response-block motif, echoed faintly in the footer. */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.15 }}
+          className="relative"
+        >
+          <div className="pointer-events-none absolute -inset-10 motif-glow" />
+          <ResponseBlock />
+        </motion.div>
+      </div>
+    </SectionBand>
   )
 }

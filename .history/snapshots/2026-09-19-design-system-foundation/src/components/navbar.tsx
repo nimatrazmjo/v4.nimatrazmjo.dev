@@ -5,7 +5,6 @@ import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
 import { cn } from "@/lib/utils"
 import { Menu, X } from "lucide-react"
-import { SectionBand } from "@/components/ui/section-band"
 import { CalendarButton } from "./calendar-button"
 
 const navItems = [
@@ -38,32 +37,28 @@ export function Navbar() {
   }, [])
 
   return (
-    <SectionBand
-      as="header"
-      tone="base"
-      className="sticky top-0 z-50 border-b border-border bg-band-base/85 backdrop-blur-md"
-      inner="flex items-center justify-between py-5"
-    >
+    <header className="sticky top-0 z-50 flex items-center justify-between py-5 bg-background/85 backdrop-blur-md border-b border-border">
       <Link
         href="#home"
-        className="flex items-center gap-2.5 font-mono text-sm font-semibold !text-band-ink"
+        className="flex items-center gap-2.5 font-mono font-semibold text-sm text-foreground"
       >
-        <span className="flex h-[26px] w-[26px] items-center justify-center rounded-[7px] bg-brand text-[12px] font-bold text-[#04222b]">
+        <span
+          className="flex h-[26px] w-[26px] items-center justify-center rounded-[7px] text-[12px] font-bold"
+          style={{ background: "var(--brand-accent)", color: "#04222b" }}
+        >
           NR
         </span>
         nimat.razmjo
       </Link>
 
-      {/* Nav labels stay monospace; active/hover is an accent job. */}
-      <nav className="hidden items-center gap-8 font-mono text-meta uppercase md:flex">
+      <nav className="hidden md:flex items-center gap-8 font-mono text-xs uppercase tracking-wide">
         {navItems.map((item) => (
           <a
             key={item.id}
             href={`#${item.id}`}
-            aria-current={active === item.id ? "true" : undefined}
             className={cn(
-              "transition-colors hover:!text-brand-ink",
-              active === item.id ? "!text-brand-ink" : "!text-band-ink-muted"
+              "transition-colors hover:text-foreground",
+              active === item.id ? "text-foreground" : "text-muted-foreground"
             )}
           >
             {item.name}
@@ -76,7 +71,7 @@ export function Navbar() {
           <CalendarButton />
         </div>
         <button
-          className="text-band-ink md:hidden"
+          className="md:hidden text-foreground"
           onClick={() => setIsOpen(!isOpen)}
           aria-label={isOpen ? "Close menu" : "Open menu"}
           aria-expanded={isOpen}
@@ -91,29 +86,29 @@ export function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="absolute inset-x-0 top-full overflow-hidden border-b border-border bg-band-base md:hidden"
+            className="absolute inset-x-0 top-full md:hidden overflow-hidden border-b border-border bg-background"
           >
-            <nav className="flex flex-col gap-1 p-6 font-mono text-xs uppercase tracking-wider">
+            <nav className="flex flex-col gap-1 p-6 font-mono text-sm uppercase tracking-wide">
               {navItems.map((item) => (
                 <a
                   key={item.id}
                   href={`#${item.id}`}
                   onClick={() => setIsOpen(false)}
                   className={cn(
-                    "py-3 transition-colors hover:!text-brand-ink",
-                    active === item.id ? "!text-brand-ink" : "!text-band-ink-muted"
+                    "py-3 transition-colors",
+                    active === item.id ? "text-foreground" : "text-muted-foreground"
                   )}
                 >
                   {item.name}
                 </a>
               ))}
-              <div className="mt-4 border-t border-border pt-4">
+              <div className="mt-4 pt-4 border-t border-border">
                 <CalendarButton className="w-full" />
               </div>
             </nav>
           </motion.div>
         )}
       </AnimatePresence>
-    </SectionBand>
+    </header>
   )
 }

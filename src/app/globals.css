@@ -2,13 +2,20 @@
 @import "tw-animate-css";
 
 /* Site is light-only; keep dark: as inert class-strategy so it never
-   follows OS prefers-color-scheme (no .dark class is ever applied). */
+   follows OS prefers-color-scheme (no .dark class is ever applied).
+   Section-level darkness is handled by <SectionBand tone="dark">, which
+   flips band tokens rather than toggling Tailwind's dark variant. */
 @custom-variant dark (&:is(.dark *));
+
+/* Any descendant of a dark band. Lets shared components (Button, Eyebrow,
+   StatDisplay, Card) carry their own on-dark treatment instead of each
+   section re-styling them. */
+@custom-variant on-dark (&:is([data-band="dark"] *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-manrope);
+  --font-sans: var(--font-inter);
   --font-mono: var(--font-plex-mono);
   --color-ring: var(--ring);
   --color-input: var(--input);
@@ -26,6 +33,21 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+
+  /* Accent token — one hue, many jobs (status dot, nav state, links,
+     numbered eyebrows, project card rule). */
+  --color-brand: var(--brand-accent);
+  --color-brand-ink: var(--brand-accent-ink);
+
+  /* Band tokens — section backgrounds and their on-band text. */
+  --color-band-base: var(--band-base);
+  --color-band-light: var(--band-light);
+  --color-band-dark: var(--band-dark);
+  --color-band-ink: var(--band-ink);
+  --color-band-ink-muted: var(--band-ink-muted);
+  --color-band-ink-faint: var(--band-ink-faint);
+  --color-band-rule: var(--band-rule);
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -33,6 +55,43 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
+
+  /* Display type scale — sans, bold, tight. Paired size/line-height so
+     headlines stay one confident face across sections. */
+  --text-display-xl: clamp(44px, 6.2vw, 76px);
+  --text-display-xl--line-height: 0.98;
+  --text-display-xl--letter-spacing: -0.03em;
+  --text-display-xl--font-weight: 800;
+
+  --text-display-lg: clamp(34px, 4.4vw, 52px);
+  --text-display-lg--line-height: 1.02;
+  --text-display-lg--letter-spacing: -0.025em;
+  --text-display-lg--font-weight: 800;
+
+  --text-display-md: clamp(28px, 3.4vw, 40px);
+  --text-display-md--line-height: 1.06;
+  --text-display-md--letter-spacing: -0.02em;
+  --text-display-md--font-weight: 800;
+
+  --text-display-sm: clamp(20px, 2vw, 24px);
+  --text-display-sm--line-height: 1.2;
+  --text-display-sm--letter-spacing: -0.015em;
+  --text-display-sm--font-weight: 700;
+
+  /* Stat numerals — display scale, no card. */
+  --text-stat: clamp(46px, 5.6vw, 68px);
+  --text-stat--line-height: 0.9;
+  --text-stat--letter-spacing: -0.04em;
+  --text-stat--font-weight: 800;
+
+  /* Body */
+  --text-lead: 1.0625rem;
+  --text-lead--line-height: 1.65;
+
+  /* Mono meta — eyebrows, tag pills, small labels. */
+  --text-meta: 0.6875rem;
+  --text-meta--line-height: 1.2;
+  --text-meta--letter-spacing: 0.12em;
 
   --animate-shimmer: shimmer 2s linear infinite;
   @keyframes shimmer {
@@ -54,10 +113,26 @@
       opacity: 0.25;
     }
   }
+
+  --animate-caret: caret 1.05s step-end infinite;
+  @keyframes caret {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
 }
 
 :root {
-  --background: oklch(98.4% 0.003 240);
+  /* Section bands */
+  --band-base: oklch(98.4% 0.003 240);
+  --band-light: oklch(100% 0 0);
+  --band-dark: oklch(23% 0.028 250);
+
+  --background: var(--band-base);
   --foreground: oklch(17% 0.012 240);
   --card: oklch(100% 0 0);
   --card-foreground: oklch(17% 0.012 240);
@@ -74,14 +149,34 @@
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(90% 0.006 240);
   --input: oklch(88% 0.006 240);
-  --ring: #00d4ff;
+  --ring: var(--brand-accent-ink);
   --radius: 0.75rem;
 
-  /* Brand tokens (design handoff) */
+  /* Brand accent — the single hue. `-ink` is the AA-safe variant for text
+     on light bands; the raw value is for dots, rules and on-dark text. */
   --brand-accent: #00d4ff;
   --brand-accent-ink: oklch(46% 0.13 222);
   --brand-accent-ink-hover: oklch(38% 0.14 222);
+  --brand-accent-on-dark: oklch(82% 0.13 200);
   --text-faint: oklch(58% 0.008 240);
+
+  /* On-band text, light default. Dark bands override these in place, so
+     `text-band-ink` etc. resolve correctly inside either tone. */
+  --band-ink: var(--foreground);
+  --band-ink-muted: var(--muted-foreground);
+  --band-ink-faint: var(--text-faint);
+  --band-rule: var(--border);
+}
+
+[data-band="dark"] {
+  --band-ink: oklch(97% 0.006 240);
+  --band-ink-muted: oklch(74% 0.015 240);
+  /* Measured on --band-dark (#131e2a): ink 15.5:1, muted 7.3:1, faint 4.65:1.
+     62% is the lowest that clears AA for the 11px mono meta labels. */
+  --band-ink-faint: oklch(62% 0.02 240);
+  --band-rule: oklch(100% 0 0 / 0.12);
+  --brand-accent-ink: var(--brand-accent-on-dark);
+  --brand-accent-ink-hover: oklch(90% 0.1 200);
 }
 
 @layer base {
@@ -93,28 +188,87 @@
   }
   body {
     @apply bg-background text-foreground selection:bg-primary/10 selection:text-primary;
+    /* Inter character variants — inert under the previous face, live now. */
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    font-synthesis-weight: none;
   }
+  /* Links are an accent job. */
   a {
     color: var(--brand-accent-ink);
   }
   a:hover {
     color: var(--brand-accent-ink-hover);
   }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-sans);
+    text-wrap: balance;
+  }
 }
 
 @layer utilities {
+  /* --- Accent jobs ------------------------------------------------------ */
+
+  /* Status dot (hero "available" badge). */
+  .brand-dot {
+    background: var(--brand-accent);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--brand-accent) 22%, transparent);
+  }
+
+  /* 2-3px accent rule — project card left border, band edges. Saturates on
+     hover; the hover state lives here so the class stays one atomic job. */
+  .brand-rule-left {
+    border-left: 3px solid color-mix(in oklch, var(--brand-accent) 55%, transparent);
+    transition: border-left-color 0.25s ease;
+  }
+  .brand-rule-left:hover,
+  a:hover .brand-rule-left {
+    border-left-color: var(--brand-accent);
+  }
+  .brand-underline {
+    border-bottom: 2px solid var(--brand-accent);
+  }
+
   .brand-chip {
     color: var(--brand-accent-ink);
-    background: color-mix(in oklch, var(--brand-accent) 12%, white);
+    background: color-mix(in oklch, var(--brand-accent) 12%, var(--band-light));
+  }
+  [data-band="dark"] .brand-chip {
+    background: color-mix(in oklch, var(--brand-accent) 16%, transparent);
   }
 
   .brand-icon-tile {
-    background: color-mix(in oklch, var(--brand-accent) 16%, white);
+    color: var(--brand-accent-ink);
+    background: color-mix(in oklch, var(--brand-accent) 16%, var(--band-light));
+  }
+  [data-band="dark"] .brand-icon-tile {
+    background: color-mix(in oklch, var(--brand-accent) 18%, transparent);
   }
 
   .brand-tint-panel {
-    background: color-mix(in oklch, var(--brand-accent) 6%, white);
+    background: color-mix(in oklch, var(--brand-accent) 6%, var(--band-light));
+  }
+
+  /* --- Motif ------------------------------------------------------------ */
+
+  /* Faint echo of the hero response block: a fine engineering grid.
+     Reused as background texture on dark bands. */
+  .motif-grid {
+    background-image:
+      linear-gradient(to right, var(--band-rule) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--band-rule) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 0%, black, transparent 78%);
+  }
+
+  .motif-glow {
+    background: radial-gradient(
+      ellipse 60% 50% at 50% 0%,
+      color-mix(in oklch, var(--brand-accent) 14%, transparent),
+      transparent 70%
+    );
   }
 
   .card-hover {
@@ -123,9 +277,11 @@
       transform 0.25s ease,
       border-color 0.25s ease;
   }
+  /* Leaves the inline-start edge alone so .brand-rule-left keeps the accent. */
   .card-hover:hover {
     box-shadow: 0 12px 30px oklch(20% 0.01 240 / 0.08);
     transform: translateY(-3px);
-    border-color: oklch(80% 0.02 222);
+    border-block-color: oklch(80% 0.02 222);
+    border-inline-end-color: oklch(80% 0.02 222);
   }
 }

@@ -14,29 +14,20 @@ export const revalidate = 3600;
 export default async function Home() {
   const { articles, totalPages } = await fetchAllBlogs({ page: 1 });
 
-  // No page-level width wrapper: each section is a full-bleed <SectionBand>
-  // that owns its own inner column, so the colour bands run edge to edge and
-  // the band change is the only transition between sections.
   return (
-    <>
+    <div className="mx-auto max-w-[1180px] px-5 sm:px-8 lg:px-14">
       <Navbar />
       <main>
         <Hero />
         <Stats />
         <Projects />
-        <Suspense
-          fallback={
-            <div className="py-20 text-center font-mono text-meta uppercase text-band-ink-muted">
-              Loading engineering notes...
-            </div>
-          }
-        >
+        <Suspense fallback={<div className="py-20 text-center text-muted-foreground font-mono text-sm italic">Loading engineering notes...</div>}>
           <ArticlesContent initialArticles={articles} totalPages={totalPages} />
         </Suspense>
         <Newsletter />
         <Contact />
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

@@ -1,9 +1,11 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { SectionBand } from "@/components/ui/section-band";
+import { SectionIntro } from "@/components/ui/section-intro";
 
 const capabilities = [
   "Scalable Systems",
@@ -26,28 +28,29 @@ export function Newsletter() {
   };
 
   return (
-    <section id="newsletter" className="mb-[120px]">
+    <SectionBand id="newsletter" tone="light" inner="py-[112px] text-center">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="rounded-[28px] py-16 px-6 text-center brand-tint-panel"
       >
-        <div className="inline-block mb-5 rounded-full border border-[oklch(87%_0.01_222)] px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
-          Engineering Newsletter
-        </div>
-
-        <h2 className="text-[clamp(28px,3.4vw,36px)] font-extrabold tracking-[-0.01em] text-foreground mb-3.5 max-w-[520px] mx-auto">
-          Engineering insights, delivered to your inbox.
-        </h2>
-        <p className="text-muted-foreground text-[15px] mb-8 max-w-[460px] mx-auto leading-relaxed">
-          Deep dives into cloud architecture, performance optimization, and modern web patterns.
-          Hosted on <strong>Substack</strong> for the best reading experience.
-        </p>
+        <SectionIntro
+          index="03"
+          eyebrow="Engineering Newsletter"
+          title="Engineering insights, delivered to your inbox."
+          lead={
+            <>
+              Deep dives into cloud architecture, performance optimization, and modern web patterns.
+              Hosted on <strong className="font-semibold text-band-ink">Substack</strong> for the
+              best reading experience.
+            </>
+          }
+          className="mb-8"
+        />
 
         <form
           onSubmit={handleSubscribe}
-          className="flex flex-col sm:flex-row items-center gap-2.5 max-w-[420px] mx-auto mb-3.5"
+          className="mx-auto mb-3.5 flex max-w-[440px] flex-col items-center gap-2.5 sm:flex-row"
         >
           <Input
             name="email"
@@ -56,24 +59,27 @@ export function Newsletter() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@example.com"
-            className="h-auto py-3.5 rounded-full border-[oklch(85%_0.01_222)] text-sm"
+            aria-label="Email address"
+            className="h-auto rounded-full border-input py-3.5 text-sm"
           />
-          <Button
-            type="submit"
-            className="rounded-full h-auto py-3.5 px-[22px] font-mono text-[13px] font-semibold whitespace-nowrap w-full sm:w-auto"
-          >
-            Join on Substack ↗
+          <Button type="submit" variant="primary" className="w-full sm:w-auto">
+            Join on Substack
           </Button>
         </form>
 
-        <p className="font-mono text-[11px] text-[var(--text-faint)] mb-7">Powered by Substack</p>
+        <p className="mb-8 font-mono text-meta uppercase text-band-ink-faint">
+          Powered by Substack
+        </p>
 
-        <div className="flex flex-wrap items-center justify-center gap-6 font-mono text-xs text-muted-foreground">
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 font-mono text-meta uppercase text-band-ink-muted">
           {capabilities.map((label) => (
-            <span key={label}>◆ {label}</span>
+            <span key={label} className="inline-flex items-center gap-2">
+              <span className="h-1 w-1 rounded-full bg-brand" />
+              {label}
+            </span>
           ))}
         </div>
       </motion.div>
-    </section>
+    </SectionBand>
   );
 }

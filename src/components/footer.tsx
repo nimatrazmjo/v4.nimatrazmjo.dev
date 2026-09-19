@@ -2,65 +2,90 @@
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Github, Linkedin, Twitter, ArrowUpRight } from "lucide-react"
+import { SectionBand } from "@/components/ui/section-band"
+import { ResponseBlock } from "@/components/response-block"
+import { Github, Linkedin, Twitter } from "lucide-react"
+
+const SUBSTACK_URL = "https://nimatrazmjo.substack.com"
+
+const socials = [
+  { icon: Github, href: "https://github.com/nimatrazmjo", label: "GitHub" },
+  { icon: Linkedin, href: "https://linkedin.com/in/nimatrazmjo", label: "LinkedIn" },
+  { icon: Twitter, href: "https://twitter.com/nimatrazmjo", label: "Twitter" },
+]
+
+const navLinks = [
+  { href: "#home", label: "Home" },
+  { href: "#articles", label: "Engineering Notes" },
+  { href: "#contact", label: "Get in Touch" },
+]
 
 export function Footer() {
-  const SUBSTACK_URL = "https://nimatrazmjo.substack.com";
-
-  const socials = [
-    { icon: Github, href: "https://github.com/nimatrazmjo" },
-    { icon: Linkedin, href: "https://linkedin.com/in/nimatrazmjo" },
-    { icon: Twitter, href: "https://twitter.com/nimatrazmjo" },
-  ]
-
   return (
-    <footer className="border-t border-border pt-14 pb-8">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+    <SectionBand
+      as="footer"
+      tone="dark"
+      texture
+      className="overflow-hidden"
+      inner="pt-14 pb-8"
+    >
+      {/* Faint echo of the hero motif — background texture, clipped by the band. */}
+      <ResponseBlock
+        tone="faint"
+        className="pointer-events-none absolute -bottom-12 -right-16 hidden w-[340px] rotate-2 border-white/[0.06] opacity-30 lg:block"
+      />
+
+      <div className="relative mb-12 grid grid-cols-1 gap-12 md:grid-cols-4">
         <div className="md:col-span-2">
-          <div className="flex items-center gap-2.5 font-mono font-semibold text-sm text-foreground mb-3.5">
-            <span
-              className="flex h-[26px] w-[26px] items-center justify-center rounded-[7px] text-[12px] font-bold"
-              style={{ background: "var(--brand-accent)", color: "#04222b" }}
-            >
+          <div className="mb-3.5 flex items-center gap-2.5 font-mono text-sm font-semibold text-band-ink">
+            <span className="flex h-[26px] w-[26px] items-center justify-center rounded-[7px] bg-brand text-[12px] font-bold text-[#04222b]">
               NR
             </span>
             nimat.razmjo
           </div>
-          <p className="text-[13px] text-muted-foreground max-w-[320px] mb-[18px] leading-relaxed">
+          <p className="mb-[18px] max-w-[320px] text-[13px] leading-relaxed text-band-ink-muted">
             Designing and developing high-performance web applications and scalable backend systems
             with a focus on user experience and technical excellence.
           </p>
           <div className="flex items-center gap-3">
-            {socials.map(({ icon: Icon, href }) => (
+            {socials.map(({ icon: Icon, href, label }) => (
               <a
                 key={href}
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-8 w-8 items-center justify-center rounded-[8px] border border-input text-foreground/70 transition-colors hover:border-foreground/40"
+                aria-label={label}
+                className="flex h-8 w-8 items-center justify-center rounded-[8px] border border-band-rule !text-band-ink-muted transition-colors hover:border-brand/50 hover:!text-brand-ink"
               >
-                <Icon className="w-[15px] h-[15px]" />
+                <Icon className="h-[15px] w-[15px]" />
               </a>
             ))}
           </div>
         </div>
 
         <div>
-          <h4 className="font-bold text-[13px] text-foreground mb-3.5">Navigation</h4>
-          <ul className="flex flex-col gap-2.5 text-[13px] text-muted-foreground">
-            <li><a href="#home" className="!text-inherit hover:!text-foreground transition-colors">Home</a></li>
-            <li><a href="#articles" className="!text-inherit hover:!text-foreground transition-colors">Engineering Notes</a></li>
-            <li><a href="#contact" className="!text-inherit hover:!text-foreground transition-colors">Get in Touch</a></li>
+          <h4 className="mb-3.5 font-mono text-meta uppercase text-band-ink">Navigation</h4>
+          <ul className="flex flex-col gap-2.5 text-[13px]">
+            {navLinks.map(({ href, label }) => (
+              <li key={href}>
+                <a
+                  href={href}
+                  className="!text-band-ink-muted transition-colors hover:!text-brand-ink"
+                >
+                  {label}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
 
         <div>
-          <h4 className="font-bold text-[13px] text-foreground mb-3.5">Newsletter</h4>
-          <p className="text-[13px] text-muted-foreground mb-3 leading-relaxed">
+          <h4 className="mb-3.5 font-mono text-meta uppercase text-band-ink">Newsletter</h4>
+          <p className="mb-3 text-[13px] leading-relaxed text-band-ink-muted">
             Get the latest insights on cloud architecture and web dev on my Substack.
           </p>
           <form
-            className="flex gap-2"
+            className="flex flex-col gap-2"
             onSubmit={(e) => {
               e.preventDefault();
               const email = (e.currentTarget.elements.namedItem('email') as HTMLInputElement).value;
@@ -72,19 +97,21 @@ export function Footer() {
               type="email"
               required
               placeholder="Email address"
-              className="h-auto py-2.5 rounded-[8px] text-[13px]"
+              aria-label="Email address"
+              className="h-auto rounded-full border-band-rule bg-transparent py-2.5 text-[13px] text-band-ink placeholder:text-band-ink-faint"
             />
-            <Button type="submit" size="icon" className="h-9 w-9 shrink-0 rounded-[8px]">
-              <ArrowUpRight className="w-4 h-4" />
+            {/* same solid pill as every other primary CTA */}
+            <Button type="submit" variant="primary" size="sm">
+              Subscribe
             </Button>
           </form>
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row items-center justify-between gap-2 pt-6 border-t border-border font-mono text-xs text-muted-foreground">
+      <div className="relative flex flex-col items-center justify-between gap-2 border-t border-band-rule pt-6 font-mono text-meta uppercase text-band-ink-faint md:flex-row">
         <span>© {new Date().getFullYear()} Nimat Razmjo. All rights reserved.</span>
         <span>Built with Next.js, Tailwind &amp; Framer Motion.</span>
       </div>
-    </footer>
+    </SectionBand>
   )
 }

@@ -3,8 +3,6 @@
 import { motion } from "framer-motion"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { SectionBand } from "@/components/ui/section-band"
-import { SectionIntro } from "@/components/ui/section-intro"
 import { ArrowLeftRight, Hexagon, Target, Code2 } from "lucide-react"
 
 const projects = [
@@ -44,16 +42,19 @@ const projects = [
 
 export function Projects() {
   return (
-    <SectionBand id="projects" tone="light" inner="py-[112px]">
-      <SectionIntro
-        index="01"
-        eyebrow="Selected Work"
-        title="Projects & Impact"
-        lead="Production systems I've architected and shipped, from real-time distributed services to platforms serving over a million users."
-        className="mb-14"
-      />
+    <section id="projects" className="pb-[130px] text-center">
+      <div className="inline-block mb-5 rounded-full border border-border px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+        Selected Work
+      </div>
+      <h2 className="text-[clamp(32px,4vw,42px)] font-extrabold tracking-[-0.01em] text-foreground mb-4">
+        Projects &amp; Impact
+      </h2>
+      <p className="text-base text-muted-foreground max-w-[560px] mx-auto mb-14 leading-relaxed">
+        Production systems I&apos;ve architected and shipped, from real-time distributed services
+        to platforms serving over a million users.
+      </p>
 
-      <div className="grid grid-cols-1 gap-5 text-left md:grid-cols-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 text-left">
         {projects.map((project, i) => (
           <motion.div
             key={project.title}
@@ -62,16 +63,18 @@ export function Projects() {
             viewport={{ once: true }}
             transition={{ delay: i * 0.1 }}
           >
-            {/* 3px accent left rule — the card-level accent job */}
-            <Card className="card-hover block rounded-[20px] rounded-l-[4px] border-border p-8 brand-rule-left">
-              <div className="mb-5 flex h-9 w-9 items-center justify-center rounded-[9px] brand-icon-tile">
+            <Card className="block p-8 rounded-[20px] border-border card-hover">
+              <div
+                className="flex h-9 w-9 items-center justify-center rounded-[9px] mb-5 brand-icon-tile"
+                style={{ color: "var(--brand-accent-ink)" }}
+              >
                 <project.icon className="h-4 w-4" />
               </div>
-              <h3 className="text-display-sm mb-1.5 text-band-ink">{project.title}</h3>
-              <div className="mb-4 font-mono text-meta uppercase text-band-ink-muted">
+              <h3 className="text-[19px] font-bold mb-1.5 text-foreground">{project.title}</h3>
+              <div className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground mb-4">
                 {project.role}
               </div>
-              <p className="mb-5 text-sm leading-relaxed text-band-ink-muted">
+              <p className="text-sm leading-relaxed text-foreground/80 mb-5">
                 {project.description}
               </p>
               <div className="flex flex-wrap gap-2">
@@ -79,7 +82,7 @@ export function Projects() {
                   <Badge
                     key={tech}
                     variant="outline"
-                    className="rounded-[6px] border-border px-2.5 py-1 font-mono text-meta uppercase text-band-ink-muted"
+                    className="rounded-[6px] border-border font-mono text-[11px] uppercase tracking-wider text-foreground/80 px-2.5 py-1"
                   >
                     {tech}
                   </Badge>
@@ -89,6 +92,6 @@ export function Projects() {
           </motion.div>
         ))}
       </div>
-    </SectionBand>
+    </section>
   )
 }

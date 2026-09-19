@@ -1,16 +1,14 @@
 import type { Metadata } from "next";
-import { Inter, IBM_Plex_Mono } from "next/font/google";
+import { Manrope, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
-// Display + body face. Headlines lean on 800; body sits at 400/500.
-const inter = Inter({
-  variable: "--font-inter",
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
 });
 
-// Accent face only: nav labels, eyebrows/badges, tag pills, meta labels.
 const plexMono = IBM_Plex_Mono({
   variable: "--font-plex-mono",
   subsets: ["latin"],
@@ -92,7 +90,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${plexMono.variable} antialiased selection:bg-primary selection:text-primary-foreground`}
+        className={`${manrope.variable} ${plexMono.variable} antialiased selection:bg-primary selection:text-primary-foreground`}
       >
         <script
           type="application/ld+json"

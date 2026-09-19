@@ -12,8 +12,6 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
-    // Pre-change file snapshots — archived copies, not live source.
-    ".history/**",
   ]),
 ]);
 
